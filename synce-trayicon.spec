@@ -15,6 +15,7 @@ Source12:	%{name}-48x48.png
 URL: 		http://synce.sourceforge.net/
 Group:          Communications
 
+Buildroot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Requires: 	synce >= 0.9.0
 BuildRequires:	synce-devel >= 0.9.0
