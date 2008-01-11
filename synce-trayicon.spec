@@ -1,6 +1,6 @@
 %define name	synce-trayicon
 %define version 0.9.0
-%define release %mkrel 6
+%define release %mkrel 7
 
 Name:           %{name}
 Summary: 	SynCE: Tray icon for GNOME 2
@@ -17,8 +17,7 @@ Group:          Communications
 
 Buildroot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Requires: 	synce >= 0.9.0
-BuildRequires:	synce-devel >= 0.9.0
+BuildRequires:	libsynce-devel >= 0.9.0
 BuildRequires:	gtk2-devel atk-devel libgnomeui2-devel libgtop2.0-devel
 
 %description
