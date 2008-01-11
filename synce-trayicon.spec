@@ -42,13 +42,6 @@ rm -fr %buildroot
 install -m 644 -D %{SOURCE10} $RPM_BUILD_ROOT/%{_miconsdir}/%{name}.png
 install -m 644 -D %{SOURCE11} $RPM_BUILD_ROOT/%{_iconsdir}/%{name}.png
 install -m 644 -D %{SOURCE12} $RPM_BUILD_ROOT/%{_liconsdir}/%{name}.png
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat > $RPM_BUILD_ROOT%{_menudir}/%{name} <<EOF
-?package(%name): needs="x11" \
-section="More Applications/Communications" \
-title="Synce-trayicon" longtitle="Displays connected SynCE devices" command="synce-trayicon" icon="%{name}.png" \
-xdg="true"
-EOF
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -84,6 +77,5 @@ rm -fr %buildroot
 %{_miconsdir}/%name.png
 %{_iconsdir}/%name.png
 %{_liconsdir}/%name.png
-%{_menudir}/%name
 %{_datadir}/applications/mandriva-%{name}.desktop
 
