@@ -18,7 +18,7 @@ Group:          Communications
 Buildroot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 BuildRequires:	libsynce-devel >= 0.9.0
-BuildRequires:	librapi-devel
+BuildRequires:	librapi-devel libglade2-devel
 BuildRequires:	gtk2-devel atk-devel libgnomeui2-devel libgtop2.0-devel
 
 %description
