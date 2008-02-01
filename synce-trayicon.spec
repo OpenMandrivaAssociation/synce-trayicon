@@ -1,6 +1,6 @@
 %define name	synce-trayicon
 %define version 0.9.0
-%define release %mkrel 7
+%define release %mkrel 8
 
 Name:           %{name}
 Summary: 	SynCE: Tray icon for GNOME 2
@@ -18,6 +18,7 @@ Group:          Communications
 Buildroot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 BuildRequires:	libsynce-devel >= 0.9.0
+BuildRequires:	librapi-devel
 BuildRequires:	gtk2-devel atk-devel libgnomeui2-devel libgtop2.0-devel
 
 %description
@@ -45,14 +46,14 @@ install -m 644 -D %{SOURCE12} $RPM_BUILD_ROOT/%{_liconsdir}/%{name}.png
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
-Name=%{title}
-Comment=%{longtitle}
+Name=Synce-trayicon
+Comment=SynCE: Tray icon for GNOME 2
 Exec=%{_bindir}/%{name} 
 Icon=%{name}
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=X-MandrivaLinux-MoreApplications-Communications;
+Categories=TelephonyTools;Utility;GTK;GNOME;
 EOF
 
 %find_lang %name
