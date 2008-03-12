@@ -1,7 +1,7 @@
 %define schemas		%{name}
 
 %define svn		3309
-%define rel		1
+%define rel		2
 %if %svn
 %define release		%mkrel 0.%svn.%rel
 %define distname	%name-%svn.tar.lzma
@@ -75,6 +75,19 @@ StartupNotify=true
 Categories=TelephonyTools;Utility;GTK;GNOME;
 EOF
 
+# XDG autostart
+mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart
+cat > %{buildroot}%{_sysconfdir}/xdg/autostart/mandriva-%{name}.desktop << EOF
+[Desktop Entry]
+Exec=synce-trayicon
+Name=SynCE tray icon (GNOME)
+Terminal=false
+Type=Application
+StartupNotify=false
+X-KDE-autostart-phase=2
+X-KDE-autostart-after=panel
+EOF
+
 rm -f %{buildroot}%{_iconsdir}/hicolor/icon-theme.cache
 
 %find_lang %{name}
@@ -101,6 +114,7 @@ rm -rf %{buildroot}
 %{_datadir}/synce/synce_trayicon_properties.glade
 %{_libdir}/%{name}
 %{_sysconfdir}/gconf/schemas/%{name}.schemas
+%{_sysconfdir}/xdg/autostart/mandriva-%{name}.desktop
 %{_mandir}/man1/*.1*
 %{_iconsdir}/hicolor/*/apps/*.png
 %{_datadir}/applications/mandriva-%{name}.desktop
