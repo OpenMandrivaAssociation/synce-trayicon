@@ -1,53 +1,72 @@
-%define name	synce-trayicon
-%define version 0.9.0
-%define release %mkrel 8
+%define schemas		%{name}
 
-Name:           %{name}
-Summary: 	SynCE: Tray icon for GNOME 2
-Version:        %{version}
+%define svn		3309
+%define rel		1
+%if %svn
+%define release		%mkrel 0.%svn.%rel
+%define distname	%name-%svn.tar.lzma
+%define	dirname		trayicon
+%else
+%define release		%mkrel %rel
+%define distname	%name-%version.tar.gz
+%define dirname		%name-%version
+%endif
+
+Name:           synce-trayicon
+Summary: 	SynCE tray icon for GNOME
+Version:        0.9.1
 Release:        %{release}
-
 License:        MIT
-Source: 	%{name}-%{version}.tar.bz2
+Source0: 	%{distname}
 Source10:	%{name}-16x16.png
 Source11:	%{name}-32x32.png
 Source12:	%{name}-48x48.png
 URL: 		http://synce.sourceforge.net/
 Group:          Communications
-
 Buildroot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-
-BuildRequires:	libsynce-devel >= 0.9.0
-BuildRequires:	librapi-devel libglade2-devel
-BuildRequires:	gtk2-devel atk-devel libgnomeui2-devel libgtop2.0-devel
+BuildRequires:	libsynce-devel
+BuildRequires:	librapi-devel
+BuildRequires:	libglade2-devel
+BuildRequires:	gtk2-devel
+BuildRequires:	atk-devel
+BuildRequires:	libgnomeui2-devel
+BuildRequires:	libgtop2.0-devel
+BuildRequires:	librra-devel
+BuildRequires:	dbus-glib-devel
+BuildRequires:	hal-devel
+BuildRequires:	gnome-keyring-devel
+BuildRequires:	libnotify-devel
 
 %description
-Synce-trayicon is part of the SynCE project:
-  http://synce.sourceforge.net/
-
-This application shows when a device is connected.
+Synce-trayicon is part of the SynCE project. This application provides
+an icon in the system tray that shows when a device is connected and
+lets you perform a variety of operations on connected devices.
 
 %prep
-%setup -q
+%setup -q -n %{dirname}
 
 %build
-%configure2_5x --with-librapi2=$RPM_BUILD_ROOT%{_prefix}
+%if %svn
+./autogen.sh
+%endif
+%configure2_5x --with-librapi2=%{buildroot}%{_prefix} --disable-schemas-install --enable-notify
 %make
 
 %install
-rm -fr %buildroot
+rm -rf %{buildroot}
 %makeinstall
 
-#menu
-install -m 644 -D %{SOURCE10} $RPM_BUILD_ROOT/%{_miconsdir}/%{name}.png
-install -m 644 -D %{SOURCE11} $RPM_BUILD_ROOT/%{_iconsdir}/%{name}.png
-install -m 644 -D %{SOURCE12} $RPM_BUILD_ROOT/%{_liconsdir}/%{name}.png
+#icons
+install -m 644 -D %{SOURCE10} %{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -m 644 -D %{SOURCE11} %{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -m 644 -D %{SOURCE12} %{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
+#menu
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Name=Synce-trayicon
-Comment=SynCE: Tray icon for GNOME 2
+Comment=SynCE tray icon for GNOME
 Exec=%{_bindir}/%{name} 
 Icon=%{name}
 Terminal=false
@@ -56,26 +75,33 @@ StartupNotify=true
 Categories=TelephonyTools;Utility;GTK;GNOME;
 EOF
 
-%find_lang %name
+rm -f %{buildroot}%{_iconsdir}/hicolor/icon-theme.cache
+
+%find_lang %{name}
 
 %clean
-rm -fr %buildroot
+rm -rf %{buildroot}
 
 %post
-%update_menus
+%{update_menus}
+%{update_icon_cache hicolor}
+%post_install_gconf_schemas %{schemas}
+
+%preun
+%preun_uninstall_gconf_schemas %{schemas}
 
 %postun
-%clean_menus
+%{clean_menus}
+%{clean_icon_cache hicolor}
 
-%files -f %name.lang
+%files -f %{name}.lang
 %defattr(-,root,root)
 %doc AUTHORS COPYING ChangeLog 
-%{_bindir}/synce-trayicon
-%{_datadir}/pixmaps/synce/synce-color-small.png
-%{_datadir}/pixmaps/synce/synce-gray-small.png
+%{_bindir}/%{name}
 %{_datadir}/synce/synce_trayicon_properties.glade
-%{_miconsdir}/%name.png
-%{_iconsdir}/%name.png
-%{_liconsdir}/%name.png
+%{_libdir}/%{name}
+%{_sysconfdir}/gconf/schemas/%{name}.schemas
+%{_mandir}/man1/*.1*
+%{_iconsdir}/hicolor/*/apps/*.png
 %{_datadir}/applications/mandriva-%{name}.desktop
 
