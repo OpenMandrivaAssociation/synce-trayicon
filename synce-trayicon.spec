@@ -1,7 +1,7 @@
 %define schemas		%{name}
 
-%define svn		3309
-%define rel		2
+%define svn		0
+%define rel		1
 %if %svn
 %define release		%mkrel 0.%svn.%rel
 %define distname	%name-%svn.tar.lzma
@@ -14,7 +14,7 @@
 
 Name:           synce-trayicon
 Summary: 	SynCE tray icon for GNOME
-Version:        0.9.1
+Version:        0.11
 Release:        %{release}
 License:        MIT
 Source0: 	%{distname}
