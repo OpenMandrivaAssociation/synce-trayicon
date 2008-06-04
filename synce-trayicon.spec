@@ -36,6 +36,7 @@ BuildRequires:	dbus-glib-devel
 BuildRequires:	hal-devel
 BuildRequires:	gnome-keyring-devel
 BuildRequires:	libnotify-devel
+BuildRequires:	gnome-common
 
 %description
 Synce-trayicon is part of the SynCE project. This application provides
