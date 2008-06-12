@@ -97,17 +97,21 @@ rm -f %{buildroot}%{_iconsdir}/hicolor/icon-theme.cache
 %clean
 rm -rf %{buildroot}
 
+%if %mdkversion < 200900
 %post
 %{update_menus}
 %{update_icon_cache hicolor}
 %post_install_gconf_schemas %{schemas}
+%endif
 
 %preun
 %preun_uninstall_gconf_schemas %{schemas}
 
+%if %mdkversion < 200900
 %postun
 %{clean_menus}
 %{clean_icon_cache hicolor}
+%endif
 
 %files -f %{name}.lang
 %defattr(-,root,root)
