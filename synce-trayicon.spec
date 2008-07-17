@@ -1,6 +1,6 @@
 %define schemas		%{name}
 
-%define svn		3471
+%define svn		3510
 %define rel		1
 %if %svn
 %define release		%mkrel 0.%svn.%rel
@@ -14,7 +14,7 @@
 
 Name:           synce-trayicon
 Summary: 	SynCE tray icon for GNOME
-Version:        0.11.1
+Version:        0.12
 Release:        %{release}
 License:        MIT
 Source0: 	%{distname}
@@ -36,6 +36,7 @@ BuildRequires:	dbus-glib-devel
 BuildRequires:	hal-devel
 BuildRequires:	gnome-keyring-devel
 BuildRequires:	libnotify-devel
+BuildRequires:	liborange-devel
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 
