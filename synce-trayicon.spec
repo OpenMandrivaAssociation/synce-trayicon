@@ -1,7 +1,7 @@
 %define schemas		%{name}
 
 %define svn		3510
-%define rel		1
+%define rel		2
 %if %svn
 %define release		%mkrel 0.%svn.%rel
 %define distname	%name-%svn.tar.lzma
@@ -21,6 +21,8 @@ Source0: 	%{distname}
 # Use autoreconf rather than gnome-autogen.sh as it seems to fail on
 # the buildsystem, even though it works in iurt... - AdamW 2008/07
 Patch0:		synce-trayicon-3510-autogen.patch
+# Default to hal-dccm, not odccm, we're using hal-dccm - AdamW 2008/07
+Patch1:		synce-trayicon-3510-defaulthal.patch
 Source10:	%{name}-16x16.png
 Source11:	%{name}-32x32.png
 Source12:	%{name}-48x48.png
@@ -51,6 +53,7 @@ lets you perform a variety of operations on connected devices.
 %prep
 %setup -q -n %{dirname}
 %patch0 -p1 -b .autogen
+%patch1 -p1
 
 %build
 %if %svn
