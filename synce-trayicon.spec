@@ -52,7 +52,9 @@ lets you perform a variety of operations on connected devices.
 
 %prep
 %setup -q -n %{dirname}
+%if %svn
 %patch0 -p1 -b .autogen
+%endif
 %patch1 -p1
 
 %build
