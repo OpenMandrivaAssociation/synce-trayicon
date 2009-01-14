@@ -14,7 +14,7 @@
 
 Name:           synce-trayicon
 Summary: 	SynCE tray icon for GNOME
-Version:        0.12
+Version:        0.13
 Release:        %{release}
 License:        MIT
 Source0: 	http://downloads.sourceforge.net/synce/%{distname}
@@ -78,7 +78,7 @@ mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Name=Synce-trayicon
-Comment=SynCE tray icon for GNOME
+Comment=SynCE tray icon
 Exec=%{_bindir}/%{name} 
 Icon=%{name}
 Terminal=false
@@ -92,7 +92,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart
 cat > %{buildroot}%{_sysconfdir}/xdg/autostart/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Exec=synce-trayicon
-Name=SynCE tray icon (GNOME)
+Name=SynCE tray icon
 Terminal=false
 Type=Application
 StartupNotify=false
