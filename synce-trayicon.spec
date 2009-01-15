@@ -40,6 +40,7 @@ BuildRequires:	hal-devel
 BuildRequires:	gnome-keyring-devel
 BuildRequires:	libnotify-devel
 BuildRequires:	liborange-devel
+BuildRequires:	libgsf-devel
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	desktop-file-utils
