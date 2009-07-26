@@ -14,7 +14,7 @@
 
 Name:		synce-trayicon
 Summary:	SynCE tray icon for GNOME
-Version:	0.13
+Version:	0.14
 Release:	%{release}
 License:	MIT
 Source0:	http://downloads.sourceforge.net/synce/%{distname}
@@ -57,6 +57,10 @@ lets you perform a variety of operations on connected devices.
 %endif
 
 %build
+
+#use HAL by default
+sed -i s/"<default>o<"/"<default>h<"/"" data/synce-trayicon.schemas.in
+
 %if %svn
 ./autogen.sh
 %endif
@@ -65,7 +69,7 @@ lets you perform a variety of operations on connected devices.
 
 %install
 rm -rf %{buildroot}
-%makeinstall
+%makeinstall_std
 
 #icons
 install -m 644 -D %{SOURCE10} %{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
