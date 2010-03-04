@@ -1,10 +1,10 @@
 %define schemas		%{name}
 
-%define svn		0
+%define svn		r3893
 %define rel		1
 %if %svn
 %define release		%mkrel 0.%svn.%rel
-%define distname	%name-%svn.tar.lzma
+%define distname	%name-%svn.tar.xz
 %define	dirname		trayicon
 %else
 %define release		%mkrel %rel
@@ -14,13 +14,13 @@
 
 Name:		synce-trayicon
 Summary:	SynCE tray icon for GNOME
-Version:	0.14
+Version:	0.15
 Release:	%{release}
 License:	MIT
 Source0:	http://downloads.sourceforge.net/synce/%{distname}
 # Use autoreconf rather than gnome-autogen.sh as it seems to fail on
 # the buildsystem, even though it works in iurt... - AdamW 2008/07
-Patch0:		synce-trayicon-3510-autogen.patch
+#Patch0:		synce-trayicon-3510-autogen.patch
 Source10:	%{name}-16x16.png
 Source11:	%{name}-32x32.png
 Source12:	%{name}-48x48.png
@@ -29,7 +29,7 @@ Group:		Communications
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libsynce-devel
 BuildRequires:	librapi-devel
-BuildRequires:	libglade2-devel
+#BuildRequires:	libglade2-devel
 BuildRequires:	gtk2-devel
 BuildRequires:	atk-devel
 BuildRequires:	libgnomeui2-devel
@@ -37,7 +37,7 @@ BuildRequires:	libgtop2.0-devel
 BuildRequires:	librra-devel
 BuildRequires:	dbus-glib-devel
 BuildRequires:	hal-devel
-BuildRequires:	gnome-keyring-devel
+BuildRequires:	libgnome-keyring-devel
 BuildRequires:	libnotify-devel
 BuildRequires:	liborange-devel
 BuildRequires:	libgsf-devel
@@ -53,7 +53,7 @@ lets you perform a variety of operations on connected devices.
 %prep
 %setup -q -n %{dirname}
 %if %svn
-%patch0 -p1 -b .autogen
+#%patch0 -p1 -b .autogen
 %endif
 
 %build
