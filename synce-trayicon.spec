@@ -20,7 +20,7 @@ License:	MIT
 Source0:	http://downloads.sourceforge.net/synce/%{distname}
 # Use autoreconf rather than gnome-autogen.sh as it seems to fail on
 # the buildsystem, even though it works in iurt... - AdamW 2008/07
-#Patch0:		synce-trayicon-3510-autogen.patch
+Patch0:		synce-trayicon-3893-autogen.patch
 Source10:	%{name}-16x16.png
 Source11:	%{name}-32x32.png
 Source12:	%{name}-48x48.png
@@ -41,7 +41,7 @@ BuildRequires:	libgnome-keyring-devel
 BuildRequires:	libnotify-devel
 BuildRequires:	liborange-devel
 BuildRequires:	libgsf-devel
-BuildRequires:	gnome-common
+#BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	desktop-file-utils
 
@@ -53,7 +53,7 @@ lets you perform a variety of operations on connected devices.
 %prep
 %setup -q -n %{dirname}
 %if %svn
-#%patch0 -p1 -b .autogen
+%patch0 -p1 -b .autogen
 %endif
 
 %build
@@ -63,6 +63,11 @@ sed -i s/"<default>o<"/"<default>h<"/"" data/synce-trayicon.schemas.in
 
 %if %svn
 ./autogen.sh
+libtoolize --copy --force
+aclocal -I m4
+autoheader
+autoconf -f
+automake -fa
 %endif
 %configure2_5x --disable-schemas-install
 %make
