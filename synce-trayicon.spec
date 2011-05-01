@@ -1,26 +1,10 @@
-%define schemas		%{name}
-
-%define svn		0
-%define rel		2
-%if %svn
-%define release		%mkrel 0.%svn.%rel
-%define distname	%name-%svn.tar.xz
-%define	dirname		trayicon
-%else
-%define release		%mkrel %rel
-%define distname	%name-%version.tar.gz
-%define dirname		%name-%version
-%endif
-
 Name:		synce-trayicon
 Summary:	SynCE tray icon for GNOME
 Version:	0.15
-Release:	%{release}
+Release:	3
 License:	MIT
-Source0:	http://downloads.sourceforge.net/synce/%{distname}
-# Use autoreconf rather than gnome-autogen.sh as it seems to fail on
-# the buildsystem, even though it works in iurt... - AdamW 2008/07
-Patch0:		synce-trayicon-3893-autogen.patch
+Source0:	http://downloads.sourceforge.net/synce/%{name}-%{version}.tar.gz
+Patch1:		synce-trayicon-0.15-libnotify0.7.patch
 Source10:	%{name}-16x16.png
 Source11:	%{name}-32x32.png
 Source12:	%{name}-48x48.png
@@ -29,9 +13,7 @@ Group:		Communications
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libsynce-devel
 BuildRequires:	librapi-devel
-#BuildRequires:	libglade2-devel
 BuildRequires:	gtk2-devel
-BuildRequires:	atk-devel
 BuildRequires:	libgnomeui2-devel
 BuildRequires:	libgtop2.0-devel
 BuildRequires:	librra-devel
@@ -41,9 +23,11 @@ BuildRequires:	libgnome-keyring-devel
 BuildRequires:	libnotify-devel
 BuildRequires:	liborange-devel
 BuildRequires:	libgsf-devel
-#BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	desktop-file-utils
+BuildRequires:	libxml2-devel
+BuildRequires:	unshield-devel
+BuildRequires:	libGConf2-devel GConf2
 
 %description
 Synce-trayicon is part of the SynCE project. This application provides
@@ -51,24 +35,13 @@ an icon in the system tray that shows when a device is connected and
 lets you perform a variety of operations on connected devices.
 
 %prep
-%setup -q -n %{dirname}
-%if %svn
-%patch0 -p1 -b .autogen
-%endif
-
-%build
+%setup -qn %{name}-%{version}
+%patch1 -p0
 
 #use HAL by default
 sed -i s/"<default>o<"/"<default>h<"/"" data/synce-trayicon.schemas.in
 
-%if %svn
-./autogen.sh
-libtoolize --copy --force
-aclocal -I m4
-autoheader
-autoconf -f
-automake -fa
-%endif
+%build
 %configure2_5x --disable-schemas-install
 %make
 
