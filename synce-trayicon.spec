@@ -1,7 +1,7 @@
 Name:		synce-trayicon
 Summary:	SynCE tray icon for GNOME
 Version:	0.15
-Release:	3
+Release:	4
 License:	MIT
 Source0:	http://downloads.sourceforge.net/synce/%{name}-%{version}.tar.gz
 Patch1:		synce-trayicon-0.15-libnotify0.7.patch
