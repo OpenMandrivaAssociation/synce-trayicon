@@ -8,7 +8,7 @@ Patch1:		synce-trayicon-0.15-libnotify0.7.patch
 Source10:	%{name}-16x16.png
 Source11:	%{name}-32x32.png
 Source12:	%{name}-48x48.png
-URL:		http://synce.sourceforge.net/
+URL:		https://synce.sourceforge.net/
 Group:		Communications
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libsynce-devel
